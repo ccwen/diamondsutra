@@ -1,8 +1,8 @@
 var config={
 	mixin:"ganzhi"
 	,extra: {
-		kepan:require("./kepan.json")
+		kepan:require("./kepan_yinshun.json")
 	}
-	,glob:"lecture.xml"
+	,glob:"dsl_yinshun.xml"
 }
 module.exports=config;
