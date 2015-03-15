@@ -1,3 +1,6 @@
+/*
+  should have at least two child nodes
+*/
 var fs=require("fs");
 var fn=process.argv[2]||"lecture_ganzhi.xml";
 var content=fs.readFileSync(fn,"utf8");
