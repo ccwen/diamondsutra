@@ -1,8 +1,8 @@
 var config={
 	mixin:"kepan"
 	,extra: {
-		kw:require("./kepan_jwn.json")
-		,kw2:require("./kepan_huipin_jwn.json")
+		"江味農居士科判":{"tag":"kw_jwn","toc":require("./kepan_jwn.json")}
+		,"李慧萍科判":{"tag":"kw_huiping","toc":require("./kepan_huiping_jwn.json")}
 	}
 	,glob:"dsl_jwn.xml"
 }
