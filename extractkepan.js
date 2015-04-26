@@ -2,7 +2,7 @@
   should have at least two child nodes
 */
 var fs=require("fs");
-var fn=process.argv[2]||"lecture_ganzhi.xml";
+var fn=process.argv[2]||"dsl_jwn_ganzhi.xml";
 var content=fs.readFileSync(fn,"utf8");
 var ganzhi="甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥";
 var pat=new RegExp('<(['+ganzhi+']) t="([^"^/].*?)" ?/>','g');
