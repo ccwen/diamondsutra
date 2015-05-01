@@ -4,22 +4,22 @@ var overwrite=false;
 var remainingjob=0;
 
 var Firebase=require("firebase");
-var rootRef = new Firebase("https://paradigm.firebaseio.com");
+var rootRef = new Firebase("https://cmphuiping.firebaseio.com");
 var fs=require("fs");
 var parseKepan=function(fn) {
-	var kepan_jwn=JSON.parse(fs.readFileSync(fn,"utf8"));
+	var kepan=JSON.parse(fs.readFileSync(fn,"utf8"));
 	var fbdata={};
-	kepan_jwn.forEach(function(entry,idx){
+	kepan.forEach(function(entry,idx){
 		var dot=entry.indexOf(".");
 		var level=parseInt(entry.substr(0,dot));
 		entry=entry.substr(dot+1);
-		fbdata[idx+1]={level:level,text:entry};
+		fbdata[idx+1]={d:level,t:entry};
 	});
 	return fbdata;
 }
 
 
-var parseXMLWithKW=function(textid,fn) {
+var parseXMLWithKW=function(dbid,fn) {
 	var lines=fs.readFileSync(fn,"utf8").split(/\r?\n/);
 	var json={},segcount=1,content="",lastname,lastsegid;
 
@@ -28,7 +28,8 @@ var parseXMLWithKW=function(textid,fn) {
 		if (lastname) json[lastsegid].name=lastname;
 		//build link from kepan entries to source text segid
 		content.replace(/<kw a="(.+?)" n="(.+?)"/g,function(m,author,kepanid){
-			kepan[author][kepanid][textid]=lastsegid;
+			if (!kepan[author][kepanid].link) kepan[author][kepanid].link={};
+			kepan[author][kepanid].link[dbid]=lastsegid;
 		});
 	}
 	lines.forEach(function(line,idx){
