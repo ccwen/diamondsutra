@@ -13,8 +13,9 @@ var parseKepan=function(fn) {
 		var dot=entry.indexOf(".");
 		var level=parseInt(entry.substr(0,dot));
 		entry=entry.substr(dot+1);
-		fbdata[idx+1]={d:level,t:entry};
+		fbdata[idx]={d:level,t:entry};
 	});
+
 	return fbdata;
 }
 
@@ -28,6 +29,11 @@ var parseXMLWithKW=function(dbid,fn) {
 		if (lastname) json[lastsegid].name=lastname;
 		//build link from kepan entries to source text segid
 		content.replace(/<kw a="(.+?)" n="(.+?)"/g,function(m,author,kepanid){
+			kepanid=parseInt(kepanid);
+			if (!kepan[author][kepanid]){
+				console.log(kepan[author][kepanid-1])
+				console.log(dbid,author,kepanid)
+			}
 			if (!kepan[author][kepanid].link) kepan[author][kepanid].link={};
 			kepan[author][kepanid].link[dbid]=lastsegid;
 		});
