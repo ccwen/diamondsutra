@@ -12,6 +12,8 @@ dsl.map(function(line,idx){
 					console.log("repeat name '"+name+"' at line",idx+1)
 				}
 				names[name]=true;
+			} else {
+				console.log("invalid format at line",idx+1)
 			}
 		}
 	});
