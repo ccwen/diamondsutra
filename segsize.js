@@ -10,10 +10,8 @@ var doFile=function(content) {
 	var ex=0, pbid="_", sizes=[] ; 
 	content.replace(/<seg id=".+?" name="(.*?)"\/>/g,function(m,m1,at){
 		totalsize+=doSeg(pbid,content.substring(ex,at-1),sizes);
-		segcount++;
 		ex=at, pbid=m1;
 	});
-	segcount++;
 	totalsize+=doSeg(pbid,content.substring(ex),sizes); //don't forget to process last segment
 	return sizes;
 }
@@ -21,4 +19,4 @@ var doFile=function(content) {
 var segsize=doFile(fs.readFileSync(fn,"utf8"));
 segsize.sort(function(a,b){return b[1]-a[1]});
 console.log(segsize);
-console.log("average",totalsize/segcount);
+console.log("average",totalsize/segsize.length);
