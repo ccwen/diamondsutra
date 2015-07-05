@@ -1,7 +1,7 @@
 var fs=require("fs");
 var content=fs.readFileSync("diamond_multilingual.xml","utf8");
 
-var trans={"tibetan":"","romanized":"","kumarajiva":"","yijing":"","xuanzang":"","gupta":"","gupta2":""};
+var trans={"tibetan":"","romanized":"","kumarajiva":"","yijing":"","xuanzang":"","gupta":""};
 var transkey=Object.keys(trans);
 var id="";
 content.replace(/<(.+?)>([^<]+?)<\/(.+?)>/g,function(m,m1,m2){
@@ -13,11 +13,15 @@ content.replace(/<(.+?)>([^<]+?)<\/(.+?)>/g,function(m,m1,m2){
 			id=m2.substr(0,dot).replace("-",".");
 			m2=m2.substr(dot+1);
 		}
-		trans[m1]+=id+"\t"+m2.replace(/\r?\n/g,"")+"\n";
+		trans[m1]+=id+","+m2.replace(/\r?\n/g,"")+"\n";
 	}
 });
 
 for (var key in trans) {
-	var fn="ds_"+key+".csv";
-	fs.writeFileSync(fn,String.fromCharCode(0xFEFF)+trans[key],"utf8");
+	var fn="ds_m_"+key+".csv";
+	fs.writeFileSync(fn,trans[key].trim(),"utf8");
 }
+
+
+//String.fromCharCode(0xFEFF)+
+
