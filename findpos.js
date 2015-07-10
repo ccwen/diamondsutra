@@ -1,5 +1,5 @@
 var fs=require("fs");
-var defs=require("./"+process.argv[2]);
+
 var jwn=fs.readFileSync("dsl_jwn.xml","utf8");
 
 jwn=jwn.replace(/<seg id="(.+?)" name="(.+?)"/g,function(m,m1,m2){
@@ -7,6 +7,8 @@ jwn=jwn.replace(/<seg id="(.+?)" name="(.+?)"/g,function(m,m1,m2){
 });
 
 jwn=jwn.replace(/<.+?>/g,"").replace(/\r?\n/g,"");
+
+var defs=require("./readlinejson")(process.argv[2]);
 
 var findDef=function(def) {
 	var idx=jwn.indexOf(def.text);
