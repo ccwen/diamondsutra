@@ -2,7 +2,7 @@ var fs=require("fs");
 
 var jwn=fs.readFileSync("dsl_jwn.xml","utf8");
 
-jwn=jwn.replace(/<seg id="(.+?)" name="(.+?)"/g,function(m,m1,m2){
+jwn=jwn.replace(/<seg id="(.+?)" name="(.+?)"\/>/g,function(m,m1,m2){
 	return "{"+m1+"_"+m2+"}";
 });
 
@@ -17,7 +17,7 @@ var findDef=function(def) {
 	var seg=jwn.substr(0,idx).lastIndexOf("{");
 	var segend=jwn.substr(0,idx).lastIndexOf("}");
 	def.seg=jwn.substring(seg+1,segend);
-	def.offset=idx-seg;
+	def.offset=idx-segend-1;
 	//console.log(def.name,idx)
 }
 
