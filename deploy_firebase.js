@@ -23,10 +23,10 @@ var parseKepan=function(fn) {
 var parseXMLWithKW=function(dbid,fn) {
 	var lines=fs.readFileSync(fn,"utf8").split(/\r?\n/);
 	var json={},segcount=1,content="",lastname,lastsegid;
-
+	seq=0;
 	var putentry=function() {
-		json[lastsegid]={text:content};
-		if (lastname) json[lastsegid].name=lastname;
+		seq++;
+		json[lastname]={text:content,seq:seq};
 		//build link from kepan entries to source text segid
 		content.replace(/<kw a="(.+?)" n="(.+?)"/g,function(m,author,kepanid){
 			kepanid=parseInt(kepanid);
@@ -35,7 +35,7 @@ var parseXMLWithKW=function(dbid,fn) {
 				console.log(dbid,author,kepanid)
 			}
 			if (!kepan[author][kepanid].link) kepan[author][kepanid].link={};
-			kepan[author][kepanid].link[dbid]=lastsegid;
+			kepan[author][kepanid].link[dbid]=lastname;
 		});
 	}
 	lines.forEach(function(line,idx){
