@@ -29,8 +29,7 @@ var processcontent=function(segid,content) {
 
 	var process_seg=function(from,to) {
 		var segcontent=content.substring(from,to).trim().replace(/<br\/>/g,"").replace(/<pb.*?>/g,"");
-		var id=segid;
-		if (subsegcount) id+="-"+subsegcount;
+		var id=segid+"-"+ (++subsegcount);
 
 		if (segcontent.length>maxseglength) {
 			maxseglength=segcontent.length;
@@ -40,7 +39,7 @@ var processcontent=function(segid,content) {
 		var segcontent=extractkw(id,segcontent).replace(/\n/g,"\\n");
 
 		output.push('"'+id+'":"'+segcontent+'"');
-		subsegcount++;
+		
 	}
 
 	if (content.indexOf("<seg/>")==-1) {
@@ -71,5 +70,5 @@ content.replace(/<seg id="(\d+)" name="(.+)"\/>/g,function(m,m1,m2,idx){
 
 console.log("max",maxsegid,maxseglength);
 console.log("average seg size",output.join("\n").length/totalsegcount);
-fs.writeFileSync("dsl_jwn.json",output.join("\n"),"utf8");
+fs.writeFileSync("dsl_jwn.json","{\n"+output.join("\n,")+"\n}","utf8");
 fs.writeFileSync("dsl_jwn_links.json",JSON.stringify(interlink,""," "),"utf8");
