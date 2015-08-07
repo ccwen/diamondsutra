@@ -1,6 +1,6 @@
 var fs=require("fs");
 var content=fs.readFileSync("dsl_jwn.xml","utf8").replace(/\r?\n/g,"\n");
-var lastidx=0,lastid=null,lastname;
+var lastidx=0,lastid=null;
 var startid="義因文顯",endid="推闡無住";
 
 var kepan_huiping=require("./kepan_huiping_jwn.json");
@@ -28,7 +28,7 @@ var processcontent=function(segid,content) {
 	var lastidx=0,subsegcount=0;
 
 	var process_seg=function(from,to) {
-		var segcontent=content.substring(from,to).trim().replace(/<br\/>/g,"").replace(/<pb.*?>/g,"").replace(/\n<\/seg>/g,"").replace(/<\/seg>/g,"");
+		var segcontent=content.substring(from,to).trim().replace(/<br\/>/g,"").replace(/<pb.*?>/g,"").replace(/\n<\/p>/g,"").replace(/<\/p>/g,"");
 		var id=segid+"-"+ (++subsegcount);
 
 		if (segcontent.length>maxseglength) {
@@ -42,20 +42,20 @@ var processcontent=function(segid,content) {
 		
 	}
 
-	if (content.indexOf("<seg")==-1) {
+	if (content.indexOf("<p>")==-1) {
 		process_seg(0,content.length);
 	} else {
-		content.replace(/<seg>/g,function(m,idx){
+		content.replace(/<p>/g,function(m,idx){
 			process_seg(lastidx,idx);
 			totalsegcount++;
-			lastidx=idx+5;
+			lastidx=idx+3;
 		});		
 		process_seg(lastidx,content.length);
 	}
 
 }
 var hide=true;
-content.replace(/<seg name="(.+)">/g,function(m,m1,idx){
+content.replace(/<p id="(.+)">/g,function(m,m1,idx){
 	if (m1===startid) hide=false;
 
 	if (hide)return;
@@ -64,8 +64,8 @@ content.replace(/<seg name="(.+)">/g,function(m,m1,idx){
 
 	console.log(m1,seg.length);
 	
-	if (lastname) processcontent(lastname,seg);
-	lastname=m1;
+	if (lastid) processcontent(lastid,seg);
+	lastid=m1;
 
 	if (m1===endid) hide=true;
 });

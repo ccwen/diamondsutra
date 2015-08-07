@@ -1,17 +1,17 @@
 var fs=require("fs");
 var dsl=fs.readFileSync("dsl_jwn.xml","utf8").split(/\r?\n/);
-var names={};
+var idarr={};
 
 dsl.map(function(line,idx){
-	line.replace(/<seg(.*?)>/g,function(m,m1){
+	line.replace(/<p (.*?)>/g,function(m,m1){
 		if (m1) {
-			var m=m1.match(/name="(.+?)"/);
+			var m=m1.match(/id="(.+?)"/);
 			if (m) {
-				var name=m[1];
-				if (names[name]) {
-					console.log("repeat name '"+name+"' at line",idx+1)
+				var id=m[1];
+				if (idarr[id]) {
+					console.log("repeat id '"+id+"' at line",idx+1)
 				}
-				names[name]=true;
+				idarr[id]=true;
 			} else {
 				console.log("invalid format at line",idx+1)
 			}
