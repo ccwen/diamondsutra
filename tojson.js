@@ -1,8 +1,7 @@
 var fs=require("fs");
 var content=fs.readFileSync("dsl_jwn.xml","utf8").replace(/\r?\n/g,"\n");
-var startid=18;
-var endid=79;
 var lastidx=0,lastid=null,lastname;
+var startid="義因文顯",endid="推闡無住";
 
 var kepan_huiping=require("./kepan_huiping_jwn.json");
 var kepan_jwn=require("./kepan_jwn.json");
@@ -54,18 +53,20 @@ var processcontent=function(segid,content) {
 	}
 
 }
-content.replace(/<seg id="(\d+)" name="(.+)"\/>/g,function(m,m1,m2,idx){
-	var id=parseInt(m1);
-	if (id<startid) return;
-	if (id>endid) return;
+var hide=true;
+content.replace(/<seg name="(.+)"\/>/g,function(m,m1,idx){
+	if (m1===startid) hide=false;
 
+	if (hide)return;
 	var seg=content.substring(lastidx,idx);
 	lastidx=idx+m.length;
-	if (lastid) {
-		processcontent(lastname,seg);
-	}
-	lastid=id;
-	lastname=m2;
+
+	console.log(m1,seg.length);
+	
+	if (lastname) processcontent(lastname,seg);
+	lastname=m1;
+
+	if (m1===endid) hide=true;
 });
 
 console.log("max",maxsegid,maxseglength);
