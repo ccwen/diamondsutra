@@ -3,7 +3,7 @@ var dsl=fs.readFileSync("dsl_jwn.xml","utf8").split(/\r?\n/);
 var names={};
 
 dsl.map(function(line,idx){
-	line.replace(/<seg(.*?)\/>/g,function(m,m1){
+	line.replace(/<seg(.*?)>/g,function(m,m1){
 		if (m1) {
 			var m=m1.match(/name="(.+?)"/);
 			if (m) {
