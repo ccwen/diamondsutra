@@ -8,6 +8,10 @@ dsl.map(function(line,idx){
 			var m=m1.match(/id="(.+?)"/);
 			if (m) {
 				var id=m[1];
+
+				if (id.indexOf("-")>-1) {
+					console.log("invalid id '"+id+"' at line",idx+1);
+				}
 				if (idarr[id]) {
 					console.log("repeat id '"+id+"' at line",idx+1)
 				}
