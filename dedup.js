@@ -1,5 +1,5 @@
 var fs=require("fs");
-var dsl=fs.readFileSync("dsl_jwn.xml","utf8").split(/\r?\n/);
+var dsl=fs.readFileSync(process.argv[2]||"dsl_jwn.xml","utf8").split(/\r?\n/);
 var idarr={};
 
 dsl.map(function(line,idx){
