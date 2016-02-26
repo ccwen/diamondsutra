@@ -1,7 +1,6 @@
 var indexer=require("ksana-indexer");
 
-var lst=require("fs").readFileSync(process.argv[2]||"dsl_jwn.lst",'utf8')
-	      .replace(/\r\n/g,"\n").split("\n");
+var lst="dsl_jwn.xml"
 
 var warning=function() {
 	console.log.apply(console,arguments);
@@ -17,6 +16,7 @@ var config={
 		config:"simple1"	
 	}
 	,glob:lst
+	,filesep:"filebreak"
 	,segsep:"p.id"
 	,warning:warning
 	,callbacks: {

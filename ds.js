@@ -16,6 +16,7 @@ var config={
 		config:"simple1"	
 	}
 	,glob:lst
+	,filesep:"filebreak"
 	,segsep:"p.id"
 	,warning:warning
 	,callbacks: {
